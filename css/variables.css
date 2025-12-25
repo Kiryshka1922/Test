@@ -3,7 +3,8 @@
  */
 
 :root {
-  --my-set-button-accent: #ca1515; /** Цвет для лайка */
-  --my-set-layout: 16px; /** border-radius very common */
-  --my-set-typo-heading: 500 16px/20px HOME;
+  --termeet-typo-paragraph: 700 16/20 Roboto;
+  --termeet-border-radius-large: 20px; /** Скруглуние для квадратов */
+  --termeet-bg-color-always-red: #b80a0a;
+  --termeet-bg-color-always-green: #30d30c;
 }
