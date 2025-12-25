@@ -1,4 +1,3 @@
-
 name: Frontend Basic Checks
 
 on:
@@ -7,7 +6,6 @@ on:
 
 jobs:
   check-frontend-pr:
-    # Запускаем только если PR из ветки, начинающейся с frontend/
     if: startsWith(github.event.pull_request.head.ref, 'frontend/')
     
     runs-on: ubuntu-latest
@@ -32,28 +30,37 @@ jobs:
         run: |
           echo "🔍 Check sync variables.json..."
           
-          # 1. Проверяем файл в текущей ветке (PR)
-          # Если в нашей ветке нет и 
-          if [ ! -f "variables.json" ] && [ ! git show origin/main:variables.json >/dev/null 2>&1 ]; then
-            echo "⚠️ File variables.json does not exist in current-branch"
+          # Проверяем существование файлов
+          PR_FILE_EXISTS=$( [ -f "variables.json" ] && echo "true" || echo "false" )
+          MAIN_FILE_EXISTS=$( git show origin/main:variables.json >/dev/null 2>&1 && echo "true" || echo "false" )
+          
+          echo "PR файл существует: $PR_FILE_EXISTS"
+          echo "Main файл существует: $MAIN_FILE_EXISTS"
+          
+          # Логика проверки
+          if [ "$PR_FILE_EXISTS" = "false" ] && [ "$MAIN_FILE_EXISTS" = "false" ]; then
+            echo "⚠️ File variables.json does not exist in both branches"
+            echo "Проверка пропущена"
             exit 0
           fi
           
-          # 2. Проверяем файл в main
-          if ! git show origin/main:variables.json >/dev/null 2>&1; && [ -f "variables.json" ] then
-            echo "⚠️ File variables.json does not exist in main"
-            exit 0
-          fi
-
-          # 2. Проверяем файл в main
-          if git show origin/main:variables.json >/dev/null 2>&1; && [ ! -f "variables.json" ] then
-            echo "⚠️ File variables.json does not exist in your branch but exist in main"
+          if [ "$PR_FILE_EXISTS" = "false" ] && [ "$MAIN_FILE_EXISTS" = "true" ]; then
+            echo "❌ File variables.json does not exist in your branch but exists in main"
+            echo "Необходимо сделать ребейз в main обновились переменные"
             exit 1
           fi
           
+          if [ "$PR_FILE_EXISTS" = "true" ] && [ "$MAIN_FILE_EXISTS" = "false" ]; then
+            echo "⚠️ File variables.json does not exist in main (новый файл)"
+            echo "Проверка синхронизации не требуется"
+            exit 0
+          fi
+          
+          # Если оба файла существуют - сравниваем
           echo "Сравниваю variables.json с версией из main..."
           
-          if git diff --quiet origin/main HEAD variables.json; then
+          # Правильный синтаксис git diff
+          if git diff --quiet origin/main:variables.json HEAD:variables.json; then
             echo "✅ variables.json синхронизирован с main"
             exit 0
           else
