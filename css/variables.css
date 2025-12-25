@@ -3,8 +3,8 @@
  */
 
 :root {
-  --termeet-typo-paragraph: 700 16px/20px Roboto;
-  --termeet-border-radius-large: 20px; /** Скруглуние для квадратов */
-  --termeet-bg-color-always-red: #b80a0a;
-  --termeet-bg-color-always-green: #30d30c;
+  --termeet-typo-paragraph: 400 45px/20px Roboto;
+  --termeet-border-radius-large: 40px;
+  --termeet-bg-color-always-red: #e014c9;
+  --termeet-bg-color-always-green: rgba(236, 220, 11, 0.82);
 }
