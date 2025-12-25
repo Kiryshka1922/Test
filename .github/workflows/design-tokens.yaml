@@ -6,7 +6,7 @@ on:
 
 jobs:
   generate:
-    if: startsWith(github.event.pull_request.head.ref, 'design/')
+    if: startsWith(github.event.pull_request.head.ref, 'design')
     
     runs-on: ubuntu-latest
     permissions:
