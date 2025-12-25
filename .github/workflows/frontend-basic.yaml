@@ -1,5 +1,5 @@
-name: "test_repo"
-run-name: "Frontend Basic"
+name: test_repo
+run-name: Frontend Basic
 on:
   pull_request:
     branches:
