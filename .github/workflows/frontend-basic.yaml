@@ -22,3 +22,46 @@ jobs:
       
       - name: Hello World
         run: echo "Hello from frontend PR check!"
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - name: Check variables.json sync
+        run: |
+          echo "🔍 Check sync variables.json..."
+          
+          # 1. Проверяем файл в текущей ветке (PR)
+          # Если в нашей ветке нет и 
+          if [ ! -f "variables.json" ] && [ ! git show origin/main:variables.json >/dev/null 2>&1 ]; then
+            echo "⚠️ File variables.json does not exist in current-branch"
+            exit 0
+          fi
+          
+          # 2. Проверяем файл в main
+          if ! git show origin/main:variables.json >/dev/null 2>&1; && [ -f "variables.json" ] then
+            echo "⚠️ File variables.json does not exist in main"
+            exit 0
+          fi
+
+          # 2. Проверяем файл в main
+          if git show origin/main:variables.json >/dev/null 2>&1; && [ ! -f "variables.json" ] then
+            echo "⚠️ File variables.json does not exist in your branch but exist in main"
+            exit 1
+          fi
+          
+          echo "Сравниваю variables.json с версией из main..."
+          
+          if git diff --quiet origin/main HEAD variables.json; then
+            echo "✅ variables.json синхронизирован с main"
+            exit 0
+          else
+            echo "❌ ОШИБКА: variables.json отличается от версии в main!"
+            echo "Нужно сделать ребейз:"
+            echo "  git fetch origin main"
+            echo "  git rebase origin/main"
+            echo "  # Разрешите конфликты если нужно"
+            echo "  git push --force-with-lease"
+            exit 1
+          fi
