@@ -1,5 +1,8 @@
 {
   "dependencies": {
     "style-dictionary": "^5.1.1"
+  },
+  "scripts": {
+    "build:tokens": "style-dictionary build -c tokens-config.json"
   }
 }

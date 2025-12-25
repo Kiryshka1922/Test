@@ -1,18 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<link rel="stylesheet" href="./css/variables.css">
 <style>
-    .p {
-        font: 500 16px/20px Roboto;
+    .flex {
+        display: flex;
+        gap: 20px;
+    }
+    .flex div {
+        width: 100px;
+        height: 100px;
+        border-radius: var(--border-radius-large, 0px);
+        background-color: var(--bg-color-always-red, black);
+    }
+    #green {
+        background-color: var(--bg-color-always-green, black);
+    }
+    p {
+        font: var(--typo-paragraph, 16px Roboto)
     }
 </style>
+
 <body>
-    <p class="p">
-        Мой текст
-    </p>
+    <div class="flex">
+        <div></div>
+        <div id="green"></div>
+        <div></div>
+    </div>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
 </body>
+
 </html>
