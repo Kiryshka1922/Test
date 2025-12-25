@@ -1,0 +1,13 @@
+name: "test_repo"
+run-name: "Frontend Basic"
+on:
+  pull_request:
+    branches:
+      - frontend/**/*
+jobs: 
+  my-first-job: 
+    name: My first job
+    runs-on: ubuntu-latest
+    steps: 
+      - name: hello
+        run: echo "Hello, world!"

@@ -1,0 +1,7 @@
+name: "test_repo"
+run-name: "Design Basic"
+on:
+  pull_request:
+    branches:
+      - design/**/*
+
