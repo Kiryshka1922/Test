@@ -6,7 +6,7 @@ jobs:
     setting-vars:
         runs-on: ubuntu-latest
         outputs:
-            needs-eslint: ${{ steps.setting-vars.outputs.my_var || false }}
+            my_var: ${{ steps.setting-vars.outputs.my_var || false }}
         steps:
             - name: setting-vars
               run: |
@@ -18,4 +18,4 @@ jobs:
             - name: check-vars
               run: |
                 echo "my_var=${{ needs.setting-vars.outputs.my_var }}"
-                echo "my_env_var=${{ env.my_env_var }}"
+                echo "my_env_var=${{ env.my_env_var || 'Переменная пустая и не определена' }}"
