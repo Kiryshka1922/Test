@@ -1,0 +1,21 @@
+on: 
+    pull_request:
+        branches: [main]
+
+jobs:
+    setting-vars:
+        runs-on: ubuntu-latest
+        outputs:
+            needs-eslint: ${{ steps.setting-vars.outputs.my_var || false }}
+        steps:
+            - name: setting-vars
+              run: |
+                echo "my_env_var=true" >> $GITHUB_ENV
+    check-vars:
+        runs-on: ubuntu-latest
+        needs: setting-vars
+        steps:
+            - name: check-vars
+              run: |
+                echo "my_var=${{ needs.setting-vars.outputs.my_var }}"
+                echo "my_env_var=${{ env.my_env_var }}"
