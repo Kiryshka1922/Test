@@ -1,0 +1,17 @@
+on:
+  pull_request:
+    paths: ['*.js']
+    branches: [main]
+
+jobs:
+  vars:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Check branches
+        run: |
+          echo 'Проверка запустилась'
