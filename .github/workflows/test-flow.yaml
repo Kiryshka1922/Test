@@ -1,5 +1,6 @@
 on:
   pull_request:
+    paths: ['*.js']
     branches: [main]
 
 jobs:
@@ -13,6 +14,4 @@ jobs:
 
       - name: Check branches
         run: |
-          git status
-          git branch -a
-          git branch -a | sed -n '2p | git checkout
+          echo 'Проверка запустилась'
