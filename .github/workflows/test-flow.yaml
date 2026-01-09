@@ -5,6 +5,8 @@ on:
 jobs:
   vars:
     runs-on: ubuntu-latest
+    outputs:
+      my_var: ${{ steps.setting-vars.outputs.my_var }}
     steps:
       - name: setting-vars
         run: |
