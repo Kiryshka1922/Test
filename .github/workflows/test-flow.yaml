@@ -9,9 +9,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
         with:
-          fetch-depth: 1
+          fetch-depth: 0
 
       - name: Check branches
         run: |
+          git status
           git branch -a
           git branch -a | sed -n '2p | git checkout
