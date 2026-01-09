@@ -10,7 +10,7 @@ jobs:
         steps:
             - name: setting-vars
               run: |
-                echo "my_env_var=true" >> $GITHUB_ENV
+                echo "my_env_var=true" >> '$GITHUB_ENV'
     check-vars:
         runs-on: ubuntu-latest
         needs: setting-vars
