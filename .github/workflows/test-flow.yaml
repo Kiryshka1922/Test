@@ -5,18 +5,13 @@ on:
 jobs:
   vars:
     runs-on: ubuntu-latest
-    outputs:
-      my_var: ${{ steps.setting-vars.outputs.my_var || false }}
     steps:
-      - name: setting-vars
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Check branches
         run: |
-          echo "my_var=true" >> '$GITHUB_OUTPUT'
-          echo "my_env_var=true" >> '$GITHUB_ENV'
-  check-vars:
-    runs-on: ubuntu-latest
-    needs: vars
-    steps:
-      - name: check-vars
-        run: |
-          echo "my_var=${{ needs.vars.outputs.my_var }}"
-          echo "my_env_var=${{ env.my_env_var || 'Переменная пустая и не определена' }}"
+          git branch -a
+          git branch -a | sed -n '2p | git checkout
