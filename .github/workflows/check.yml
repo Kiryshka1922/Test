@@ -1,0 +1,18 @@
+name: "Check twice checks"
+
+on: 
+  pull_request:
+    branches:
+      - main
+  push: 
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check twice cheks
+        if: |
+           github.event_name == 'pull_request' || (github.event_name == 'push' && !(!github.event.pull_request && github.event.pull_request.merged == true))
+        run: |
+          echo "Check twice checks"
